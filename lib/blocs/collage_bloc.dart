@@ -18,8 +18,11 @@ class CollageBloc extends Bloc<CollageEvent, CollageState> {
   final CollageType collageType;
   final BuildContext context;
 
-  CollageBloc({required this.context, required this.collageType, required this.path}) : super(InitialState()) {
-    on<CheckPermissionEvent>((event, emit) => checkPermission(event.isFromPicker, event.permissionType, event.index));
+  CollageBloc(
+      {required this.context, required this.collageType, required this.path})
+      : super(InitialState()) {
+    on<CheckPermissionEvent>((event, emit) =>
+        checkPermission(event.isFromPicker, event.permissionType, event.index));
     on<AllowPermissionEvent>((event, emit) {
       if (event.isFromPicker) {
         openPicker(event.permissionType, event.index);
@@ -28,7 +31,8 @@ class CollageBloc extends Bloc<CollageEvent, CollageState> {
         loadImages(path, getImageCount());
       }
     });
-    on<AskPermissionEvent>((event, emit) => askPermission(event.isFromPicker, event.permissionType, event.index));
+    on<AskPermissionEvent>((event, emit) =>
+        askPermission(event.isFromPicker, event.permissionType, event.index));
 
     on<DenyPermissionEvent>((event, emit) {
       showSnackBar();
@@ -212,7 +216,7 @@ class CollageBloc extends Bloc<CollageEvent, CollageState> {
 
   ///Used to show message
   showSnackBar({String msg = "Permission Denied."}) {
-    Scaffold.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
       duration: Duration(milliseconds: 1000),
     ));
