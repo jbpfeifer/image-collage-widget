@@ -29,7 +29,7 @@ class GridCollageWidget extends StatelessWidget {
         width: 1200,
         height: 800,
         color: Colors.white,
-        padding: EdgeInsets.all(4),
+        padding: EdgeInsets.all(2),
         child: StaggeredGridView.countBuilder(
             shrinkWrap: false,
             itemCount: _imageList.length,
@@ -82,7 +82,7 @@ class GridCollageWidget extends StatelessWidget {
             child: _imageList[index].imageUrl != null
                 ? hasSpace
                     ? Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(1.0),
                         child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(5)),
@@ -97,7 +97,7 @@ class GridCollageWidget extends StatelessWidget {
                         fit: BoxFit.cover,
                       )
                 : const Padding(
-                    padding: EdgeInsets.all(3),
+                    padding: EdgeInsets.all(1.0),
                     child: Material(
                       child: Icon(Icons.add),
                       borderRadius: BorderRadius.all(Radius.circular(5)),
