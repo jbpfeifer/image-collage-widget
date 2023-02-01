@@ -57,10 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Widget buildRaisedButton(CollageType collageType, String text) {
-      return RaisedButton(
+      return ElevatedButton(
         onPressed: () => pushImageWidget(collageType),
-        shape: buttonShape(),
-        color: color,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(text),
@@ -80,13 +78,13 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             buildRaisedButton(CollageType.VSplit, 'Vsplit'),
             buildRaisedButton(CollageType.HSplit, 'HSplit'),
-            buildRaisedButton(CollageType.FourSquare, 'FourSquare'),
-            buildRaisedButton(CollageType.NineSquare, 'NineSquare'),
+            buildRaisedButton(CollageType.VFour, 'VFour'),
+            buildRaisedButton(CollageType.HFour, 'HFour'),
             buildRaisedButton(CollageType.ThreeVertical, 'ThreeVertical'),
             buildRaisedButton(CollageType.ThreeHorizontal, 'ThreeHorizontal'),
+            buildRaisedButton(CollageType.NineSquare, 'NineSquare'),
             buildRaisedButton(CollageType.LeftBig, 'LeftBig'),
             buildRaisedButton(CollageType.RightBig, 'RightBig'),
-            buildRaisedButton(CollageType.FourLeftBig, 'FourLeftBig'),
             buildRaisedButton(CollageType.VMiddleTwo, 'VMiddleTwo'),
             buildRaisedButton(CollageType.CenterBig, 'CenterBig'),
           ],
@@ -101,8 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
       FadeRouteTransition(page: CollageSample(type)),
     );
   }
-
-
 
   RoundedRectangleBorder buttonShape() {
     return RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0));

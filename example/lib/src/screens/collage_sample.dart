@@ -29,6 +29,33 @@ class _CollageSample extends State<CollageSample> {
   final GlobalKey _screenshotKey = GlobalKey();
   bool _startLoading = false;
 
+  getRatio() {
+    var ratio = 3 / 2;
+    print(widget.collageType);
+    if (widget.collageType == CollageType.VSplit ||
+        widget.collageType == CollageType.VFour ||
+        widget.collageType == CollageType.ThreeVertical ||
+        widget.collageType == CollageType.LeftBig ||
+        widget.collageType == CollageType.RightBig) {
+      ratio = 3 / 2;
+    } else if (widget.collageType == CollageType.HSplit ||
+        widget.collageType == CollageType.HFour ||
+        widget.collageType == CollageType.ThreeHorizontal) {
+      ratio = 2 / 3;
+    } else if (widget.collageType == "FourSquare") {
+      ratio = 2 / 2;
+    } else if (widget.collageType == "NineSquare") {
+      ratio = 3 / 3;
+    } else if (widget.collageType == "FourLeftBig") {
+      ratio = 3 / 2;
+    } else if (widget.collageType == "VMiddleTwo") {
+      ratio = 3 / 2;
+    } else if (widget.collageType == "CenterBig") {
+      ratio = 3 / 2;
+    }
+    return ratio;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +69,8 @@ class _CollageSample extends State<CollageSample> {
           ),
           title: const Text(
             "Collage maker",
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white),
+            style: TextStyle(
+                fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white),
           ),
           actions: <Widget>[
             GestureDetector(
@@ -50,23 +78,29 @@ class _CollageSample extends State<CollageSample> {
               child: const Padding(
                 padding: EdgeInsets.only(right: 16),
                 child: Center(
-                  child:
-                      Text("Share", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white)),
+                  child: Text("Share",
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white)),
                 ),
               ),
             )
           ]),
       body: Stack(
         children: [
-          RepaintBoundary(
-            key: _screenshotKey,
+          AspectRatio(
+            aspectRatio: getRatio(),
+            child: RepaintBoundary(
+              key: _screenshotKey,
 
-            /// @param withImage:- If withImage = true, It will load image from given {filePath (default = "Camera")}
-            /// @param collageType:- CollageType.CenterBig
+              /// @param withImage:- If withImage = true, It will load image from given {filePath (default = "Camera")}
+              /// @param collageType:- CollageType.CenterBig
 
-            child: ImageCollageWidget(
-              collageType: widget.collageType,
-              withImage: true,
+              child: ImageCollageWidget(
+                collageType: widget.collageType,
+                withImage: true,
+              ),
             ),
           ),
           if (_startLoading)
@@ -106,7 +140,8 @@ class _CollageSample extends State<CollageSample> {
         _startLoading = true;
       });
       Directory dir;
-      RenderRepaintBoundary? boundary = _screenshotKey.currentContext!.findRenderObject() as RenderRepaintBoundary?;
+      RenderRepaintBoundary? boundary = _screenshotKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary?;
       await Future.delayed(const Duration(milliseconds: 2000));
       if (Platform.isIOS) {
         ///For iOS
@@ -117,7 +152,8 @@ class _CollageSample extends State<CollageSample> {
       }
       var image = await boundary?.toImage();
       var byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
-      File screenshotImageFile = File('${dir.path}/${DateTime.now().microsecondsSinceEpoch}.png');
+      File screenshotImageFile =
+          File('${dir.path}/${DateTime.now().microsecondsSinceEpoch}.png');
       await screenshotImageFile.writeAsBytes(byteData!.buffer.asUint8List());
       _shareScreenShot(screenshotImageFile.path);
       return byteData.buffer.asUint8List();

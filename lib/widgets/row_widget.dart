@@ -11,6 +11,7 @@ import '../utils/permission_type.dart';
 
 class GridCollageWidget extends StatelessWidget {
   var _imageList = <Images>[];
+  var hasSpace = true;
   final CollageType _collageType;
   final CollageBloc _imageListBloc;
   BuildContext _context;
@@ -24,18 +25,24 @@ class GridCollageWidget extends StatelessWidget {
     this._context = context;
     if (_imageListBloc.state is ImageListState) {
       _imageList = (_imageListBloc.state as ImageListState).images;
-      return StaggeredGridView.countBuilder(
-          shrinkWrap: false,
-          itemCount: _imageList.length,
-          crossAxisCount: getCrossAxisCount(_collageType),
-          primary: true,
-          itemBuilder: (BuildContext context, int index) => buildRow(index),
-          staggeredTileBuilder: (int index) => StaggeredTile.count(
-              getCellCount(
-                  index: index, isForCrossAxis: true, type: _collageType),
-              double.parse(getCellCount(
-                      index: index, isForCrossAxis: false, type: _collageType)
-                  .toString())));
+      return Container(
+        width: 600,
+        height: 400,
+        color: Colors.red,
+        child: StaggeredGridView.countBuilder(
+            shrinkWrap: false,
+            itemCount: _imageList.length,
+            crossAxisCount: getCrossAxisCount(_collageType),
+            primary: true,
+            itemBuilder: (BuildContext context, int index) =>
+                buildRow(index, hasSpace),
+            staggeredTileBuilder: (int index) => StaggeredTile.count(
+                getCellCount(
+                    index: index, isForCrossAxis: true, type: _collageType),
+                double.parse(getCellCount(
+                        index: index, isForCrossAxis: false, type: _collageType)
+                    .toString()))),
+      );
     }
     return Container(
       color: Colors.green,
@@ -49,7 +56,9 @@ class GridCollageWidget extends StatelessWidget {
         type == CollageType.ThreeHorizontal ||
         type == CollageType.ThreeVertical)
       return 2;
-    else if (type == CollageType.FourSquare)
+    else if (type == CollageType.FourSquare ||
+        type == CollageType.VFour ||
+        type == CollageType.HFour)
       return 4;
     else if (type == CollageType.NineSquare)
       return 9;
@@ -62,7 +71,7 @@ class GridCollageWidget extends StatelessWidget {
   }
 
   ///Build UI either image is selected or not
-  buildRow(int index) {
+  buildRow(int index, bool hasSpace) {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -70,10 +79,22 @@ class GridCollageWidget extends StatelessWidget {
           bottom: 0.0,
           child: Container(
             child: _imageList[index].imageUrl != null
-                ? Image.file(
-                    _imageList[index].imageUrl ?? File(''),
-                    fit: BoxFit.cover,
-                  )
+                ? hasSpace
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ClipRRect(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
+                          child: Image.file(
+                            _imageList[index].imageUrl ?? File(''),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                    : Image.file(
+                        _imageList[index].imageUrl ?? File(''),
+                        fit: BoxFit.cover,
+                      )
                 : const Padding(
                     padding: EdgeInsets.all(3),
                     child: Material(
@@ -203,7 +224,7 @@ class GridCollageWidget extends StatelessWidget {
       else
 
         /// Main axis cell count
-        return 2;
+        return 1.33;
     }
 
     /// total cell count :- 2
@@ -217,7 +238,33 @@ class GridCollageWidget extends StatelessWidget {
       else
 
         /// Main axis cell count
-        return 1;
+        return 1.5;
+    }
+
+    /// total cell count :- 4
+    /// Column and Row :- 2*2 (Cross axis count)
+    else if (type == CollageType.VFour) {
+      if (isForCrossAxis)
+
+        /// Cross axis cell count
+        return 2;
+      else
+
+        /// Main axis cell count
+        return 4 / 3;
+    }
+
+    /// total cell count :- 4
+    /// Column and Row :- 2*2 (Cross axis count)
+    else if (type == CollageType.HFour) {
+      if (isForCrossAxis)
+
+        /// Cross axis cell count
+        return 2;
+      else
+
+        /// Main axis cell count
+        return 3;
     }
 
     /// total cell count :- 4
@@ -241,10 +288,10 @@ class GridCollageWidget extends StatelessWidget {
       if (isForCrossAxis) {
         return 1;
       } else
-        return (index == 0) ? 2 : 1;
+        return (index == 0) ? 1.33 : 1.33 / 2;
     } else if (type == CollageType.ThreeHorizontal) {
       if (isForCrossAxis) {
-        return (index == 0) ? 2 : 1;
+        return (index == 0) ? 3 : 2;
       } else
         return 1;
     }
@@ -258,12 +305,12 @@ class GridCollageWidget extends StatelessWidget {
       if (isForCrossAxis) {
         return (index == 0) ? 2 : 1;
       } else
-        return (index == 0) ? 2 : 1;
+        return (index == 0) ? 2 : 2 / 3;
     } else if (type == CollageType.RightBig) {
       if (isForCrossAxis) {
         return (index == 1) ? 2 : 1;
       } else
-        return (index == 1) ? 2 : 1;
+        return (index == 1) ? 2 : 2 / 3;
     } else if (type == CollageType.FourLeftBig) {
       if (isForCrossAxis) {
         return (index == 0) ? 2 : 1;
@@ -282,7 +329,7 @@ class GridCollageWidget extends StatelessWidget {
       if (isForCrossAxis) {
         return 6;
       } else
-        return (index == 0 || index == 3 || index == 5) ? 4 : 3;
+        return (index == 0 || index == 3 || index == 5) ? 4 : 8 / 3;
     }
 
     /// total tile count (image count)--> 7
@@ -299,7 +346,7 @@ class GridCollageWidget extends StatelessWidget {
       if (isForCrossAxis) {
         return (index == 1) ? 6 : 3;
       } else
-        return (index == 1) ? 12 : 4;
+        return (index == 1) ? 8 : 4;
     }
   }
 

@@ -2,7 +2,9 @@
 enum CollageType {
   VSplit,
   HSplit,
+  VFour,
   FourSquare,
+  HFour,
   NineSquare,
   ThreeVertical,
   LeftBig,
