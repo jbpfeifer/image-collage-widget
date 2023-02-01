@@ -197,22 +197,25 @@ class CollageBloc extends Bloc<CollageEvent, CollageState> {
 
   /// The no. of image return as per collage type.
   getImageCount() {
-    if (collageType == CollageType.HSplit || collageType == CollageType.VSplit)
+    if (collageType == CollageType.HSplit ||
+        collageType == CollageType.VSplit) {
       return 2;
-    else if (collageType == CollageType.FourSquare ||
+    } else if (collageType == CollageType.FourSquare ||
         collageType == CollageType.FourLeftBig ||
         collageType == CollageType.VFour ||
         collageType == CollageType.HFour ||
         collageType == CollageType.LeftBig ||
-        collageType == CollageType.RightBig)
+        collageType == CollageType.RightBig) {
       return 4;
-    else if (collageType == CollageType.NineSquare)
-      return 9;
-    else if (collageType == CollageType.ThreeVertical ||
-        collageType == CollageType.ThreeHorizontal)
+    } else if (collageType == CollageType.SixSquare) {
+      return 6;
+    } else if (collageType == CollageType.ThreeVertical ||
+        collageType == CollageType.ThreeHorizontal) {
       return 3;
-    else if (collageType == CollageType.VMiddleTwo ||
-        collageType == CollageType.CenterBig) return 5;
+    } else if (collageType == CollageType.VMiddleTwo ||
+        collageType == CollageType.CenterBig) {
+      return 5;
+    }
   }
 
   ///Used to show message

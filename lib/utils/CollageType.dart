@@ -5,7 +5,7 @@ enum CollageType {
   VFour,
   FourSquare,
   HFour,
-  NineSquare,
+  SixSquare,
   ThreeVertical,
   LeftBig,
   RightBig,

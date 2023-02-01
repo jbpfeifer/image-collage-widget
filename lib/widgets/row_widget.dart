@@ -26,9 +26,10 @@ class GridCollageWidget extends StatelessWidget {
     if (_imageListBloc.state is ImageListState) {
       _imageList = (_imageListBloc.state as ImageListState).images;
       return Container(
-        width: 600,
-        height: 400,
-        color: Colors.red,
+        width: 1200,
+        height: 800,
+        color: Colors.white,
+        padding: EdgeInsets.all(4),
         child: StaggeredGridView.countBuilder(
             shrinkWrap: false,
             itemCount: _imageList.length,
@@ -60,7 +61,7 @@ class GridCollageWidget extends StatelessWidget {
         type == CollageType.VFour ||
         type == CollageType.HFour)
       return 4;
-    else if (type == CollageType.NineSquare)
+    else if (type == CollageType.SixSquare)
       return 9;
     else if (type == CollageType.LeftBig || type == CollageType.RightBig)
       return 3;
@@ -277,7 +278,7 @@ class GridCollageWidget extends StatelessWidget {
 
     /// total cell count :- 9
     /// Column and Row :- 3*3 (Cross axis count)
-    else if (type == CollageType.NineSquare) {
+    else if (type == CollageType.SixSquare) {
       return 3;
     }
 

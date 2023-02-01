@@ -2,7 +2,6 @@ library image_collage_widget;
 
 import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:image_collage_widget/image_collage_widget.dart';
 import 'package:image_collage_widget/utils/CollageType.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -17,7 +17,7 @@ import 'package:share_plus/share_plus.dart';
 class CollageSample extends StatefulWidget {
   final CollageType collageType;
 
-  CollageSample(this.collageType);
+  const CollageSample(this.collageType, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -31,27 +31,18 @@ class _CollageSample extends State<CollageSample> {
 
   getRatio() {
     var ratio = 3 / 2;
-    print(widget.collageType);
-    if (widget.collageType == CollageType.VSplit ||
-        widget.collageType == CollageType.VFour ||
-        widget.collageType == CollageType.ThreeVertical ||
-        widget.collageType == CollageType.LeftBig ||
-        widget.collageType == CollageType.RightBig) {
-      ratio = 3 / 2;
-    } else if (widget.collageType == CollageType.HSplit ||
+    // print(widget.collageType);
+    // if (widget.collageType == CollageType.VSplit ||
+    //     widget.collageType == CollageType.VFour ||
+    //     widget.collageType == CollageType.ThreeVertical ||
+    //     widget.collageType == CollageType.LeftBig ||
+    //     widget.collageType == CollageType.RightBig ||
+    //     widget.collageType == CollageType.SixSquare) {
+    //   ratio = 3 / 2;
+    if (widget.collageType == CollageType.HSplit ||
         widget.collageType == CollageType.HFour ||
         widget.collageType == CollageType.ThreeHorizontal) {
       ratio = 2 / 3;
-    } else if (widget.collageType == "FourSquare") {
-      ratio = 2 / 2;
-    } else if (widget.collageType == "NineSquare") {
-      ratio = 3 / 3;
-    } else if (widget.collageType == "FourLeftBig") {
-      ratio = 3 / 2;
-    } else if (widget.collageType == "VMiddleTwo") {
-      ratio = 3 / 2;
-    } else if (widget.collageType == "CenterBig") {
-      ratio = 3 / 2;
     }
     return ratio;
   }
@@ -87,34 +78,41 @@ class _CollageSample extends State<CollageSample> {
               ),
             )
           ]),
-      body: Stack(
-        children: [
-          AspectRatio(
-            aspectRatio: getRatio(),
-            child: RepaintBoundary(
-              key: _screenshotKey,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Colors.grey,
+        child: Center(
+          child: Stack(
+            children: [
+              AspectRatio(
+                aspectRatio: getRatio(),
+                child: RepaintBoundary(
+                  key: _screenshotKey,
 
-              /// @param withImage:- If withImage = true, It will load image from given {filePath (default = "Camera")}
-              /// @param collageType:- CollageType.CenterBig
+                  /// @param withImage:- If withImage = true, It will load image from given {filePath (default = "Camera")}
+                  /// @param collageType:- CollageType.CenterBig
 
-              child: ImageCollageWidget(
-                collageType: widget.collageType,
-                withImage: true,
-              ),
-            ),
-          ),
-          if (_startLoading)
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: const IgnorePointer(
-                ignoring: true,
-                child: Center(
-                  child: CircularProgressIndicator(),
+                  child: ImageCollageWidget(
+                    collageType: widget.collageType,
+                    withImage: true,
+                  ),
                 ),
               ),
-            )
-        ],
+              if (_startLoading)
+                SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: const IgnorePointer(
+                    ignoring: true,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -150,7 +148,7 @@ class _CollageSample extends State<CollageSample> {
         ///For Android
         dir = (await getExternalStorageDirectory())!;
       }
-      var image = await boundary?.toImage();
+      var image = await boundary?.toImage(pixelRatio: 3.0);
       var byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
       File screenshotImageFile =
           File('${dir.path}/${DateTime.now().microsecondsSinceEpoch}.png');

@@ -4,11 +4,13 @@ import 'package:image_collage_widget/utils/CollageType.dart';
 import 'src/screens/collage_sample.dart';
 import 'src/tranistions/fade_route_transition.dart';
 
+// ignore: depend_on_referenced_packages
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  // ignore: deprecated_member_use
   BlocOverrides.runZoned(
-    () => runApp(MyApp()),
+    () => runApp(const MyApp()),
     blocObserver: AppBlocObserver(),
   );
 }
@@ -27,6 +29,8 @@ class AppBlocObserver extends BlocObserver {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,17 +40,19 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.blue,
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   var color = Colors.white;
 
   @override
@@ -69,11 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
     ///Create multple shapes
     return Scaffold(
       appBar: AppBar(
-        title: Text("Test"),
+        title: const Text("Test"),
       ),
       body: Center(
         child: ListView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           shrinkWrap: true,
           children: <Widget>[
             buildRaisedButton(CollageType.VSplit, 'Vsplit'),
@@ -82,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
             buildRaisedButton(CollageType.HFour, 'HFour'),
             buildRaisedButton(CollageType.ThreeVertical, 'ThreeVertical'),
             buildRaisedButton(CollageType.ThreeHorizontal, 'ThreeHorizontal'),
-            buildRaisedButton(CollageType.NineSquare, 'NineSquare'),
+            buildRaisedButton(CollageType.SixSquare, 'SixSquare'),
             buildRaisedButton(CollageType.LeftBig, 'LeftBig'),
             buildRaisedButton(CollageType.RightBig, 'RightBig'),
             buildRaisedButton(CollageType.VMiddleTwo, 'VMiddleTwo'),
