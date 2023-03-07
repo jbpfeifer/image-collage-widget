@@ -30,7 +30,7 @@ class GridCollageWidget extends StatelessWidget {
         width: 1200,
         height: 800,
         color: Colors.white,
-        padding: const EdgeInsets.all(2),
+        // padding: const EdgeInsets.all(2),
         child: StaggeredGridView.countBuilder(
             shrinkWrap: false,
             itemCount: _imageList.length,
