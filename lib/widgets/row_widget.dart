@@ -30,7 +30,7 @@ class GridCollageWidget extends StatelessWidget {
         width: 1200,
         height: 800,
         color: Colors.white,
-        padding: EdgeInsets.all(2),
+        padding: const EdgeInsets.all(2),
         child: StaggeredGridView.countBuilder(
             shrinkWrap: false,
             itemCount: _imageList.length,
@@ -111,24 +111,27 @@ class GridCollageWidget extends StatelessWidget {
                         _imageList[index].imageUrl ?? File(''),
                         fit: BoxFit.cover,
                       )
-                : const Padding(
-                    padding: EdgeInsets.all(1.0),
+                : Padding(
+                    padding: const EdgeInsets.all(1.0),
                     child: Material(
-                      child: Icon(Icons.add),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      color: Color(0xFFD3D3D3),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      color: const Color(0xFFD3D3D3),
+                      child: InkWell(
+                        onTap: () => showDialogImage(index),
+                        child: const Icon(Icons.add),
+                      ),
                     ),
                   ),
           ),
         ),
-        Positioned.fill(
-            child: Material(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                color: Colors.transparent,
-                child: InkWell(
-                  highlightColor: Colors.transparent,
-                  onTap: () => showDialogImage(index),
-                ))),
+        // Positioned.fill(
+        //     child: Material(
+        //         borderRadius: BorderRadius.all(Radius.circular(5)),
+        //         color: Colors.transparent,
+        //         child: InkWell(
+        //           highlightColor: Colors.transparent,
+        //           onTap: () => showDialogImage(index),
+        //         ))),
       ],
     );
   }
@@ -139,15 +142,15 @@ class GridCollageWidget extends StatelessWidget {
         context: _context,
         builder: (BuildContext context) {
           return Container(
-            color: Color(0xFF737373),
+            color: const Color(0xFF737373),
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(10.0),
-                      topRight: const Radius.circular(10.0))),
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0))),
               child: Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20),
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -392,7 +395,7 @@ class GridCollageWidget extends StatelessWidget {
                 onPressed: () {
                   dismissDialog();
                 },
-                child: Text("Cancel"),
+                child: const Text("Cancel"),
               )
             ],
           );
