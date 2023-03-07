@@ -93,7 +93,7 @@ class GridCollageWidget extends StatelessWidget {
                             mode: ExtendedImageMode.gesture,
                             initGestureConfigHandler: (state) {
                               return GestureConfig(
-                                minScale: 0.9,
+                                minScale: 1,
                                 animationMinScale: 0.7,
                                 maxScale: 3.0,
                                 animationMaxScale: 3.5,
