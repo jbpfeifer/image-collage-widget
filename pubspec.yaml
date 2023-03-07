@@ -18,7 +18,7 @@ dependencies:
   permission_handler: ^10.0.0
   image_picker: ^0.8.4+4
   equatable: ^2.0.3
-  extended_image: ^6.4.1
+  extended_image: ^7.0.2
 
 
 dev_dependencies:
