@@ -8,6 +8,7 @@ import '../blocs/collage_state.dart';
 import '../model/images.dart';
 import '../utils/CollageType.dart';
 import '../utils/permission_type.dart';
+import 'package:extended_image/extended_image.dart';
 
 class GridCollageWidget extends StatelessWidget {
   var _imageList = <Images>[];
@@ -86,9 +87,23 @@ class GridCollageWidget extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(5)),
-                          child: Image.file(
+                          child: ExtendedImage.file(
                             _imageList[index].imageUrl ?? File(''),
                             fit: BoxFit.cover,
+                            mode: ExtendedImageMode.gesture,
+                            initGestureConfigHandler: (state) {
+                              return GestureConfig(
+                                minScale: 0.9,
+                                animationMinScale: 0.7,
+                                maxScale: 3.0,
+                                animationMaxScale: 3.5,
+                                speed: 1.0,
+                                inertialSpeed: 100.0,
+                                initialScale: 1.0,
+                                inPageView: false,
+                                initialAlignment: InitialAlignment.center,
+                              );
+                            },
                           ),
                         ),
                       )
