@@ -35,7 +35,7 @@ class GridCollageWidget extends StatelessWidget {
             shrinkWrap: false,
             itemCount: _imageList.length,
             crossAxisCount: getCrossAxisCount(_collageType),
-            primary: true,
+            primary: false,
             itemBuilder: (BuildContext context, int index) =>
                 buildRow(index, hasSpace),
             staggeredTileBuilder: (int index) => StaggeredTile.count(
