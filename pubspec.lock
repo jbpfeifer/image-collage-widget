@@ -76,10 +76,11 @@ packages:
   extended_image:
     dependency: "direct main"
     description:
-      name: extended_image
-      sha256: "75e4b0ad0f8f63eed7935ff2506c809a670f5e6dd0f61304525879d53fc41a17"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "892ab3f0f6aaa0bd91f028587651207176128795"
+      url: "https://github.com/jbpfeifer/extended_image.git"
+    source: git
     version: "7.0.2"
   extended_image_library:
     dependency: transitive
