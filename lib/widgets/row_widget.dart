@@ -89,7 +89,7 @@ class GridCollageWidget extends StatelessWidget {
                               const BorderRadius.all(Radius.circular(5)),
                           child: ExtendedImage.file(
                             _imageList[index].imageUrl ?? File(''),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                             mode: ExtendedImageMode.gesture,
                             initGestureConfigHandler: (state) {
                               return GestureConfig(
